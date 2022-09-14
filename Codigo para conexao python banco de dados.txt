@@ -1,0 +1,17 @@
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host="localhost", # Endereço do host. localhost é no próprio computador
+    user="root", # Usuario, caso exista. Root é padrão
+    passwd="", # Senha, caso exista. "" é senha em branco
+    database="teste" # Base de dados SQL
+)
+
+cursor = conexao.cursor() # Inicia cursor de comandos
+
+cursor.execute() # Executa um comando (SQL para salvar banco de dados)
+
+conexao.commit() # Comutar salva alterações banco de dados
+
+cursor.close() # Fecha cursor de comandos
+conexao.close() # Fecha conexao

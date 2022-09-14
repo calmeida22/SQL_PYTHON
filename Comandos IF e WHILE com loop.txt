@@ -1,0 +1,15 @@
+r = 's'
+while r == 's': # Atenção a identação para incorporar os comandos na função
+
+    num = int(input('Digit um número: ')) # Se não definir tipo de input, da erro str x int
+
+    if 5 > num >= 1:
+        print(f'O número inserido {num} é menor que 5.')
+    elif num == 0:
+        print(f'O número inserido {num} é igual a zero.')
+    elif num >= 5:
+        print(f'O número inserido {num} é igual ou maior que 5.')
+
+
+    r = str(input('quer continuar?[S/N]')) # While, enquanto r = 's', executa o comando novamente.
+    print('FIM')

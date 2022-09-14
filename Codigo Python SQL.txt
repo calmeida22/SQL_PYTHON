@@ -1,0 +1,27 @@
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="senai"
+)
+
+cursor = conexao.cursor()
+
+# Para inserir simultaneamente em 2 tabelas diferentes. (conexao.commit() está desativada, pois há COMMIT no SQL)
+comando = ("""SET AUTOCOMMIT=0;
+START TRANSACTION;
+INSERT INTO testesenai(idteste,nome) VALUES(001,'Nome001');
+INSERT INTO teste2(nome,idteste2) VALUES('nomeTeste001',(LAST_INSERT_ID(001))); # LAST INSERT é ultima entrada com auto_incremento
+COMMIT;
+SET AUTOCOMMIT=1;""")
+
+# testesenai = "INSERT INTO testesenai(idteste,nome) VALUES(004,'Nome004');"
+# teste2 = "INSERT INTO teste2(idteste2,nome) VALUES(002,'nomeTeste002');"
+cursor.execute(comando)
+
+# conexao.commit()
+
+cursor.close()
+conexao.close()

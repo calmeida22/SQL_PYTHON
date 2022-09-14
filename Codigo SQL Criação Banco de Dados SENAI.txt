@@ -1,0 +1,45 @@
+CREATE DATABASE senai;
+
+CREATE TABLE Curso (
+    siglaCurso VARCHAR(10) PRIMARY KEY,
+    curso VARCHAR(100),
+    numHoras FLOAT
+);
+
+CREATE TABLE Turma (
+    siglaTurma VARCHAR(10) PRIMARY KEY,
+    siglaCurso VARCHAR(10),
+	CONSTRAINT FK_siglaCurso FOREIGN KEY (siglaCurso) REFERENCES Curso (siglaCurso)
+);
+
+CREATE TABLE Aluno (
+    RA INTEGER PRIMARY KEY,
+    nome VARCHAR(50),
+    sobrenome VARCHAR(50),
+    CPF BIGINT,
+    email VARCHAR(100),
+    siglaTurma VARCHAR(10),
+	CONSTRAINT FK_siglaTurma FOREIGN KEY (siglaTurma) REFERENCES Turma (siglaTurma)
+);
+
+CREATE TABLE Telefone (
+    telefone BIGINT PRIMARY KEY,
+    RA INTEGER,
+	CONSTRAINT FK_RA FOREIGN KEY (RA) REFERENCES Aluno (RA)
+);
+
+CREATE TABLE Unidade (
+    siglaUnidade VARCHAR(10) PRIMARY KEY,
+    nomeUnidade VARCHAR(100),
+    siglaCurso VARCHAR(10),
+	CONSTRAINT FK_siglaCurso2 FOREIGN KEY (siglaCurso) REFERENCES Curso (siglaCurso)
+);
+
+CREATE TABLE Historico (
+    idHistorico INTEGER PRIMARY KEY,
+    nota FLOAT,
+    RA INTEGER,
+    siglaUnidade VARCHAR(10),
+	CONSTRAINT FK_RA2 FOREIGN KEY (RA) REFERENCES Aluno (RA),
+	CONSTRAINT FK_siglaUnidade FOREIGN KEY (siglaUnidade) REFERENCES Unidade (siglaUnidade)
+);

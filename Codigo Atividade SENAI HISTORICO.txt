@@ -1,0 +1,100 @@
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="senai"
+)
+
+cursor = conexao.cursor()
+r = 's'
+while r == 's':
+    print('Bem Vindo a Página de Cadastros')
+    print('Cadastros Disponíveis\n')
+    print('1-Alunos\n2-Curso\n3-Turma\n4-Unidade\n5-Histórico')
+    op1 = int(input('Escolha uma das opções acima: '))
+
+    if op1 == 2:
+        r1 = 's'
+        while r1 == 's':
+            print('Cadastro de Cursos selecionado!\n')
+            curso = input('Digite o nome do curso: \n')
+            siglaCurso = input('Digite a sigla do curso (ex:AAA001): \n')
+            numHoras = float(input('Digite o número de horas do curso (ex:0000,00): \n'))
+            comando = f"INSERT INTO curso(siglaCurso,curso,numHoras) VALUES('{siglaCurso}','{curso}',{numHoras})"
+            cursor.execute(comando)
+            conexao.commit()
+        r1 = input('Deseja cadastrar mais um curso? [S ou N]: ')
+        print('Cadastro de Cursos finalizado!')
+    elif op1 == 3:
+        print('opção Turma')
+    elif op1 == 1:
+        print('opção Aluno e Telefone')
+    elif op1 == 4:
+        print('opção Unidade')
+    elif op1 == 5:
+        print('opção Histórico')
+
+    # comando = ("""SET AUTOCOMMIT=0;
+    # START TRANSACTION;
+    # CREATE TABLE Curso (
+    #     siglaCurso VARCHAR(10) PRIMARY KEY,
+    #     curso VARCHAR(100),
+    #     numHoras FLOAT
+    # );
+    #
+    # CREATE TABLE Turma (
+    #     siglaTurma VARCHAR(10) PRIMARY KEY,
+    #     siglaCurso VARCHAR(10),
+    # 	CONSTRAINT FK_siglaCurso FOREIGN KEY (siglaCurso) REFERENCES Curso (siglaCurso)
+    # );
+    #
+    # CREATE TABLE Aluno (
+    #     RA INTEGER PRIMARY KEY,
+    #     nome VARCHAR(50),
+    #     sobrenome VARCHAR(50),
+    #     CPF BIGINT,
+    #     email VARCHAR(100),
+    #     siglaTurma VARCHAR(10),
+    # 	CONSTRAINT FK_siglaTurma FOREIGN KEY (siglaTurma) REFERENCES Turma (siglaTurma)
+    # );
+    #
+    # CREATE TABLE Telefone (
+    #     telefone BIGINT PRIMARY KEY,
+    #     RA INTEGER,
+    # 	CONSTRAINT FK_RA FOREIGN KEY (RA) REFERENCES Aluno (RA)
+    # );
+    #
+    # CREATE TABLE Unidade (
+    #     siglaUnidade VARCHAR(10) PRIMARY KEY,
+    #     nomeUnidade VARCHAR(100),
+    #     siglaCurso VARCHAR(10),
+    # 	CONSTRAINT FK_siglaCurso2 FOREIGN KEY (siglaCurso) REFERENCES Curso (siglaCurso)
+    # );
+    #
+    # CREATE TABLE Historico (
+    #     idHistorico INTEGER PRIMARY KEY,
+    #     nota FLOAT,
+    #     RA INTEGER,
+    #     siglaUnidade VARCHAR(10),
+    # 	CONSTRAINT FK_RA2 FOREIGN KEY (RA) REFERENCES Aluno (RA),
+    # 	CONSTRAINT FK_siglaUnidade FOREIGN KEY (siglaUnidade) REFERENCES Unidade (siglaUnidade)
+    # );
+    #
+    # COMMIT;
+    # SET AUTOCOMMIT=1;""")
+
+    # comando = ("""SET AUTOCOMMIT=0;
+    # START TRANSACTION;
+    # INSERT INTO testesenai(idteste,nome) VALUES(001,'nome001');
+    # INSERT INTO teste2(idteste2,nome) VALUES(001,'nome001');
+    # COMMIT;
+    # SET AUTOCOMMIT=1;""")
+
+    cursor.execute()
+
+    conexao.commit()
+r = input('Deseja realizar mais cadastros? [S ou N]: ')
+cursor.close()
+conexao.close()

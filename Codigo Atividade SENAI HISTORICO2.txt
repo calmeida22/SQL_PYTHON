@@ -1,0 +1,93 @@
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="",
+    database="senai"
+)
+
+cursor = conexao.cursor()
+r = 's'
+while r == 's':
+    print('Bem Vindo a Página de Cadastros')
+    print('Cadastros Disponíveis\n')
+    print('1-Alunos\n2-Curso\n3-Turma\n4-Unidade\n5-Histórico\n')
+    op1 = int(input('Escolha uma das opções acima: \n'))
+
+    if op1 == 2:
+        r2 = 's'
+        while r2 == 's':
+            print('Cadastro de Cursos selecionado!\n')
+            curso = input('Digite o nome do curso: \n')
+            siglaCurso = input('Digite a sigla do curso (ex:AAA000): \n')
+            numHoras = float(input('Digite o número de horas do curso (ex:0000.0): \n'))
+            comando2 = f"INSERT INTO curso(siglaCurso,curso,numHoras) VALUES('{siglaCurso}','{curso}',{numHoras})\n"
+            cursor.execute(comando2)
+            conexao.commit()
+            r2 = input('Deseja cadastrar mais um curso? [S ou N]: \n')
+            print('Cadastro de Cursos finalizado!\n')
+
+    elif op1 == 3:
+        r3 = 's'
+        while r3 == 's':
+            print('Cadastro de Turmas selecionado!\n')
+            siglaTurma = input('Digite sigla da turma ex (AAA000): \n')
+            siglaCurso3 = input('Digite sigla do curso ex (AAA000) \n')
+            comando3 = f"INSERT INTO turma(siglaTurma,siglaCurso) VALUES('{siglaTurma}','{siglaCurso3}')\n"
+            cursor.execute(comando3)
+            conexao.commit()
+            r3 = input('Deseja cadastrar mais uma turma? [S ou N]: \n')
+            print('Cadastro de Turmas finalizado!\n')
+
+    elif op1 == 1:
+        r1 = 's'
+        while r1 == 's':
+            print('Cadastro de Aluno selecionado!\n')
+            RA = int(input('Digite RA do aluno ex (0000): \n'))
+            nome = input('Digite o primeiro nome do aluno: \n')
+            sobrenome = input('Digite sobrenome do aluno: \n')
+            CPF = int(input('Digite o CPF do aluno com 11 dígitos (ex: 00000000000): \n'))
+            email = input('Digite seu e-mail: \n')
+            siglaTurma1 = input('Digite a sigla da turma ex (AAA000): \n')
+            telefone = int(input('Digite o teledone do aluno: \n'))
+            comando1 = f"SET AUTOCOMMIT=0;START TRANSACTION;INSERT INTO aluno(RA,nome,sobrenome,CPF,email,siglaTurma) VALUES({RA},'{nome}','{sobrenome}',{CPF},'{email}','{siglaTurma1}'); INSERT INTO telefone(RA,telefone) VALUES({RA},{telefone});COMMIT;SET AUTOCOMMIT=1;"
+            cursor.execute(comando1)
+            r1 = input('Deseja cadastrar mais um Aluno? [S ou N]: \n')
+            print('Cadastro de Aluno finalizado!\n')
+
+    elif op1 == 4:
+        r4 = 's'
+        while r4 == 's':
+            print('Cadastro de Unidades selecionado!\n')
+            siglaUnidade = input('Digite sigla da Unidade ex (AAA000): \n')
+            nomeUnidade = input('Digite o nome da Unidade: \n')
+            siglaCurso4 = input('Digite sigla do curso ex (AAA000) \n')
+            comando4 = f"INSERT INTO unidade(siglaUnidade,nomeUnidade,siglaCurso) VALUES('{siglaUnidade}','{nomeUnidade}','{siglaCurso4}')\n "
+            cursor.execute(comando4)
+            conexao.commit()
+            r4 = input('Deseja cadastrar mais uma Unidade? [S ou N]: \n')
+            print('Cadastro de Unidade finalizado!\n')
+
+    elif op1 == 5:
+        r5 = 's'
+        while r5 == 's':
+            print('Cadastro de Histórico selecionado!\n')
+            idHistorico = int(input('Digite a ID do histórico ex (0000): \n'))
+            RA5 = input('Digite o RA do aluno ex (0000) \n')
+            nota = float(input('Digite a nota do aluno: \n'))
+            siglaUnidade5 = input('Digite sigla da Unidade ex (AAA000): \n')
+            comando5 = f"INSERT INTO historico(idHistorico,nota,RA,siglaUnidade) VALUES({idHistorico},{nota},{RA5},'{siglaUnidade5}')\n"
+            cursor.execute(comando5)
+            conexao.commit()
+            r5 = input('Deseja cadastrar mais um Histótico? [S ou N]: \n')
+            print('Cadastro de Histórico finalizado!\n')
+
+r = input('Deseja realizar mais cadastros? [S ou N]: ')
+
+# cursor.execute()
+
+# conexao.commit()
+
+cursor.close()
+conexao.close()
